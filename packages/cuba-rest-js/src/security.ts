@@ -1,11 +1,10 @@
 import {
-  BasePermissionValue,
+  AttributePermissionValue,
+  EffectivePermsInfo,
   EntityAttrPermissionValue,
   EntityOperationType,
-  PermissionInfo,
-  PermissionType,
-  RoleInfo,
-  RoleType
+  EntityPermissionValue,
+  Permission
 } from './model';
 
 /**
@@ -14,30 +13,25 @@ import {
  *
  * @param entityName CUBA model entity
  * @param attributeName
- * @param perms - list of user permissions
- * @param roles - list of user roles
+ * @param perms - user effective permissions
  * @return attribute could be not allowed to display (DENY), allowed for modification (MODIFY)
  * or allowed in read only mode (VIEW).
  */
 export function getAttributePermission(entityName: string,
                                        attributeName: string,
-                                       perms: PermissionInfo[] | undefined,
-                                       roles: RoleInfo[] | undefined): EntityAttrPermissionValue {
+                                       perms?: EffectivePermsInfo): EntityAttrPermissionValue {
 
-  if (!perms || !roles) return 'DENY';
+  if (!perms) return 'DENY';
 
-  if (hasRole(roles, RoleType.SUPER)) {
-    return 'MODIFY';
-  }
+  const explicitPerm: Permission<AttributePermissionValue> = perms.explicitPermissions.entityAttributes
+    .find(perm => perm.target === `${entityName}:${attributeName}`);
 
-  const perm = getMaxAllowedAttrPerm(entityName, attributeName, perms);
+  if (explicitPerm != null) return convertAttributePermValue(explicitPerm.value);
 
-  // return 'DENY' if no permission exist and user in STRICTLY_DENYING role
-  if (hasRole(roles, RoleType.STRICTLY_DENYING) && perm === null) {
-    return 'DENY';
-  }
+  const defaultValuePerm = perms.defaultValues.entityAttribute;
+  if (defaultValuePerm != null) return convertAttributePermValue(defaultValuePerm);
 
-  return perm == null ? 'MODIFY' : perm.value as EntityAttrPermissionValue;
+  return perms.undefinedPermissionPolicy === 'ALLOW' ? 'MODIFY' : 'DENY';
 }
 
 /**
@@ -45,73 +39,42 @@ export function getAttributePermission(entityName: string,
  *
  * @param entityName CUBA model entity
  * @param operation - operation to be checked (CRUD)
- * @param perms - list of user permissions
- * @param roles - list of user roles
+ * @param perms - user effective permissions
  */
 export function isOperationAllowed(entityName: string,
                                    operation: EntityOperationType,
-                                   perms: PermissionInfo[] | undefined,
-                                   roles: RoleInfo[] | undefined): boolean {
+                                   perms?: EffectivePermsInfo): boolean {
 
-  if (!perms || !roles) return false;
+  if (!perms) return false;
 
-  if (hasRole(roles, RoleType.SUPER)) return true;
+  const explicitPerm: Permission<EntityPermissionValue> = perms.explicitPermissions.entities
+    .find(perm => perm.target === `${entityName}:${operation}`);
 
-  const perm = getMaxAllowedOpPerm(entityName, operation, perms);
+  if (explicitPerm != null) return explicitPerm.value === 1;
 
-  // readonly role not affect read operation
-  if (hasRole(roles, RoleType.READONLY) && operation !== 'read') {
-    // operation (except read) is disabled for readonly role if no perm is set
-    if (perm == null) return false;
+  const defaultValuePerm: EntityPermissionValue = getDefaultValuePerm(operation, perms);
+  if (defaultValuePerm != null) return defaultValuePerm === 1;
+
+  return perms.undefinedPermissionPolicy === 'ALLOW';
+}
+
+function getDefaultValuePerm(op: EntityOperationType, perms: EffectivePermsInfo): EntityPermissionValue {
+  switch (op) {
+    case "create":
+      return perms.defaultValues.entityCreate;
+    case "read":
+      return perms.defaultValues.entityRead;
+    case "update":
+      return perms.defaultValues.entityUpdate;
+    case "delete":
+      return perms.defaultValues.entityDelete;
   }
+}
 
-  if (hasRole(roles, RoleType.DENYING) || hasRole(roles, RoleType.STRICTLY_DENYING)) {
-    // operation is disabled for denying roles if no perm is set
-    if (perm == null) return false;
+function convertAttributePermValue(val: AttributePermissionValue): EntityAttrPermissionValue {
+  switch (val) {
+    case 2: return 'MODIFY';
+    case 1: return 'VIEW';
+    default: return 'DENY';
   }
-
-  return perm == null || perm.value as BasePermissionValue !== 'DENY' ? true : false;
-}
-
-function getMaxAllowedOpPerm(entityName: string,
-                             operation: EntityOperationType,
-                             perms: PermissionInfo[]): PermissionInfo | null {
-
-  const opFqn = `${entityName}:${operation}`;
-
-  return perms
-    .filter(perm => perm.type === PermissionType.ENTITY_OP && perm.target === opFqn)
-    .reduce((resultPerm, perm) => {
-        // assign result perm to maximum allowed permission between current and resultPerm
-        if (resultPerm == null) return perm;
-        if (perm.value as BasePermissionValue === 'ALLOW') return perm;
-        return resultPerm;
-    }, null);
-}
-
-function getMaxAllowedAttrPerm(entityName: string,
-                               attributeName: string,
-                               perms: PermissionInfo[]): PermissionInfo | null {
-
-  const attrFqn = `${entityName}:${attributeName}`;
-
-  return perms
-    .filter(perm => perm.type === PermissionType.ENTITY_ATTR && perm.target === attrFqn)
-    .reduce((resultPerm, perm) => {
-
-      if (resultPerm === null) return perm;
-
-      // assign result perm to maximum allowed permission between current and resultPerm
-      const resultPermValue: EntityAttrPermissionValue = resultPerm.value as EntityAttrPermissionValue;
-      const currentPermValue: EntityAttrPermissionValue = perm.value as EntityAttrPermissionValue;
-
-      if (currentPermValue === 'MODIFY') return perm;
-      if (currentPermValue === 'VIEW' && resultPermValue === 'DENY') return perm;
-      return resultPerm;
-
-    }, null);
-}
-
-function hasRole(roles: RoleInfo[], roleType: RoleType): boolean {
-  return roles.some(r => r.roleType === roleType);
 }
