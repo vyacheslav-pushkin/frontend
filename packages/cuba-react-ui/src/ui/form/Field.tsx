@@ -5,16 +5,16 @@ import {Form} from "antd";
 import {FormComponentProps, FormItemProps} from 'antd/lib/form';
 import {GetFieldDecoratorOptions} from 'antd/lib/form/Form';
 import {Msg} from '../Msg';
-import {FieldPermissionContainer} from './FieldPermssionContainer';
 import {
-  MainStoreInjected,
   DataCollectionStore,
-  WithId,
+  getPropertyInfo,
   injectMainStore,
-  getPropertyInfo
+  MainStoreInjected,
+  WithId
 } from "@cuba-platform/react-core";
-import {MetaClassInfo} from "@cuba-platform/rest";
+import {MetaClassInfo, EntityAttrPermissionValue} from "@cuba-platform/rest";
 import {uuidPattern} from "../../util/regex";
+import {observable, runInAction} from "mobx";
 
 type Props = MainStoreInjected & FormComponentProps & {
   entityName: string
@@ -30,39 +30,58 @@ type Props = MainStoreInjected & FormComponentProps & {
   getFieldDecoratorOpts?: GetFieldDecoratorOptions
 }
 
-// noinspection JSUnusedGlobalSymbols
-export const Field = injectMainStore(observer((props: Props) => {
+@observer
+@injectMainStore
+export class Field extends React.Component<Props> {
 
-  const {getFieldDecorator} = props.form;
+  @observable permission: EntityAttrPermissionValue = 'DENY';
 
-  const {
-    entityName, propertyName, optionsContainer, fieldDecoratorId, getFieldDecoratorOpts, formItemKey, mainStore
-  } = props;
+  async componentDidMount() {
+    const {
+      entityName, propertyName
+    } = this.props;
 
-  const formItemOpts: FormItemProps = {... props.formItemOpts};
-  if (!formItemOpts.label) formItemOpts.label = <Msg entityName={entityName} propertyName={propertyName}/>;
+    return this.props.mainStore!.security.getAttributePermission(entityName, propertyName)
+      .then((perm: EntityAttrPermissionValue) => {
+      return runInAction(() => {
+          this.permission = perm;
+      });
+    });
+  }
 
-  return (
-    <FieldPermissionContainer entityName={entityName} propertyName={propertyName} renderField={(isReadOnly: boolean) => {
+  render() {
+    const {props, permission} = this;
+    const {getFieldDecorator} = props.form;
 
-      return <Form.Item key={formItemKey ? formItemKey : propertyName}
-                        {...formItemOpts}>
+    // console.log('permission', permission);
 
-        {getFieldDecorator(
-            fieldDecoratorId ? fieldDecoratorId : propertyName,
-          {...getDefaultOptions(mainStore?.metadata, entityName, propertyName), ...getFieldDecoratorOpts}
-        )(
-          <FormField entityName={entityName}
-                     propertyName={propertyName}
-                     disabled={isReadOnly}
-                     optionsContainer={optionsContainer}
-          />
-        )}
-      </Form.Item>
+    const {
+      entityName, propertyName, optionsContainer, fieldDecoratorId, getFieldDecoratorOpts, formItemKey, mainStore
+    } = props;
 
-    }}/>);
+    // TODO this does not work
+    // if (permission === 'DENY') return null;
 
-}));
+    const formItemOpts: FormItemProps = {...props.formItemOpts};
+    if (!formItemOpts.label) formItemOpts.label = <Msg entityName={entityName} propertyName={propertyName}/>;
+
+    return <Form.Item key={formItemKey ? formItemKey : propertyName}
+                      {...formItemOpts}>
+
+      {getFieldDecorator(
+        fieldDecoratorId ? fieldDecoratorId : propertyName,
+        {...getDefaultOptions(mainStore?.metadata, entityName, propertyName), ...getFieldDecoratorOpts}
+      )(
+        <FormField entityName={entityName}
+                   propertyName={propertyName}
+                   disabled={permission !== 'MODIFY'}
+                   optionsContainer={optionsContainer}
+        />
+      )}
+    </Form.Item>
+
+  };
+}
 
 function getDefaultOptions(metadata: MetaClassInfo[] | undefined, entityName: string, propertyName: string): GetFieldDecoratorOptions {
   if (!metadata) {
@@ -74,7 +93,7 @@ function getDefaultOptions(metadata: MetaClassInfo[] | undefined, entityName: st
   if (propertyInfo?.type === 'uuid') {
     return {
       rules: [
-        { pattern: uuidPattern }
+        {pattern: uuidPattern}
       ],
       validateTrigger: 'onSubmit'
     };

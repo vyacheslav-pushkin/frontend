@@ -9,6 +9,8 @@ export class Security {
   @observable private restSupportEffectivePerms: boolean = true;
   permissionsRequestCount = 0;
 
+  private dataLoadPromise?: Promise<EffectivePermsInfo | void>;
+
   constructor(private cubaREST: CubaApp) {
   }
 
@@ -16,27 +18,31 @@ export class Security {
     return !!this.effectivePermissions || !this.restSupportEffectivePerms;
   };
 
-  getAttributePermission = (entityName: string, attributeName: string): EntityAttrPermissionValue => {
+  // noinspection JSUnusedGlobalSymbols
+  getAttributePermission = (entityName: string, attributeName: string): Promise<EntityAttrPermissionValue> => {
 
-    if (!this.dataLoaded) return 'DENY';
+    if (!this.dataLoadPromise) return Promise.resolve('DENY');
+    
+    return this.dataLoadPromise.then(() => {
+      // do not deny anything for rest version prev 7.2
+      if (!this.restSupportEffectivePerms) return Promise.resolve('MODIFY');
 
-    // do not deny anything for rest version prev 7.2
-    if (!this.restSupportEffectivePerms) return 'MODIFY';
+      const attrFqn = `${entityName}:${attributeName}`;
 
-    const attrFqn = `${entityName}:${attributeName}`;
+      let perm = this.attrPermissionCache.get(attrFqn);
+      if (perm != null) return Promise.resolve(perm);
 
-    let perm = this.attrPermissionCache.get(attrFqn);
-    if (perm != null) return perm;
+      perm = getAttributePermission(entityName, attributeName, this.effectivePermissions);
+      this.attrPermissionCache.set(attrFqn, perm);
+      return Promise.resolve(perm);
+    });
 
-    perm = getAttributePermission(entityName, attributeName, this.effectivePermissions);
-    this.attrPermissionCache.set(attrFqn, perm);
-    return perm;
   };
 
   @action loadPermissions() {
     const requestId = ++this.permissionsRequestCount;
 
-    this.cubaREST.getEffectivePermissions()
+    this.dataLoadPromise = this.cubaREST.getEffectivePermissions()
       .then(action((effectivePermsInfo: EffectivePermsInfo) => {
         if (requestId === this.permissionsRequestCount) {
           this.effectivePermissions = effectivePermsInfo;
