@@ -224,6 +224,7 @@ create table SCR_COMPOSITION_O2O_TEST_ENTITY (
     DELETED_BY varchar(50),
     --
     NAME varchar(255),
+    NESTED_COMPOSITION_ID uuid,
     --
     primary key (ID)
 )^
@@ -271,3 +272,37 @@ create table SCR_DATATYPES_TEST_ENTITY_ASSOCIATION_M2M_TEST_ENTITY_LINK (
     primary key (DATATYPES_TEST_ENTITY_ID, ASSOCIATION_M2_M_TEST_ENTITY_ID)
 )^
 -- end SCR_DATATYPES_TEST_ENTITY_ASSOCIATION_M2M_TEST_ENTITY_LINK
+
+-- begin SCR_DEEPLY_NESTED_TEST_ENTITY
+create table SCR_DEEPLY_NESTED_TEST_ENTITY (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    NAME varchar(255),
+    ASSOCIATION_O2_OATTR_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCR_DEEPLY_NESTED_TEST_ENTITY
+-- begin SCR_DATATYPES_TEST_ENTITY2
+create table SCR_DATATYPES_TEST_ENTITY2 (
+    ID uuid,
+    VERSION integer not null,
+    CREATE_TS timestamp,
+    CREATED_BY varchar(50),
+    UPDATE_TS timestamp,
+    UPDATED_BY varchar(50),
+    DELETE_TS timestamp,
+    DELETED_BY varchar(50),
+    --
+    DATATYPES_TEST_ENTITY_ATTR_ID uuid,
+    --
+    primary key (ID)
+)^
+-- end SCR_DATATYPES_TEST_ENTITY2
