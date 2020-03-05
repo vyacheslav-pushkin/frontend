@@ -5,6 +5,7 @@ create index IDX_SCR_FAVORITE_CAR_CAR on SCR_FAVORITE_CAR (CAR_ID)^
 create index IDX_SCR_FAVORITE_CAR_USER on SCR_FAVORITE_CAR (USER_ID)^
 -- end SCR_FAVORITE_CAR
 -- begin SCR_CAR
+alter table SCR_CAR add constraint FK_SCR_CAR_SPEC foreign key (SPEC_ID) references SCR_SPECIFICATIONS(ID)^
 alter table SCR_CAR add constraint FK_SCR_CAR_GARAGE foreign key (GARAGE_ID) references SCR_GARAGE(ID)^
 alter table SCR_CAR add constraint FK_SCR_CAR_TECHNICAL_CERTIFICATE foreign key (TECHNICAL_CERTIFICATE_ID) references SCR_TECHNICAL_CERTIFICATE(ID)^
 alter table SCR_CAR add constraint FK_SCR_CAR_PHOTO foreign key (PHOTO_ID) references SYS_FILE(ID)^

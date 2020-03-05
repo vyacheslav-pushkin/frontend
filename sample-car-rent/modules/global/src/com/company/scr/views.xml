@@ -9,6 +9,7 @@
                   view="_minimal"/>
         <property name="photo"
                   view="_minimal"/>
+        <property name="spec" view="_minimal"/>
     </view>
     <view class="com.company.scr.entity.FavoriteCar"
           extends="_local"
