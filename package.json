@@ -22,6 +22,7 @@
   "scripts": {
     "lerna": "lerna",
     "antora": "antora",
+    "antora:gen": "antora docs/antora-playbook.yml",
     "commit": "node_modules/commitizen/bin/git-cz",
     "pack-given-client-libs": "node scripts/pack-given-client-libs.js",
     "pack-react-client-libs": "node scripts/pack-react-client-libs.js",
