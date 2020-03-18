@@ -11,7 +11,7 @@ content:
 #        - master
 #        - develop
 #        - v[0-9]*
-      start_path: docs/doc-component-repo
+      start_path: documentation/doc-component-repo
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable

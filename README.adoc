@@ -1,4 +1,3 @@
-[[cuba-platform-frontend-generator]]
 = CUBA Platform Frontend Generator
 :toc:
 --------------------------------
@@ -107,7 +106,7 @@ project metadata (what entities do we have, etc.). There are two ways of
 doing that.
 
 [[passing-project-metadata-from-cuba-studio]]
-====== Passing Project Metadata from CUBA Studio
+===== Passing Project Metadata from CUBA Studio
 
 * Open your project in CUBA Studio.
 * Open settings (`File > Settings`), then open
@@ -134,7 +133,7 @@ image:packages/front-generator/etc/interactive-projects.png[Interactive
 project selection]
 
 [[passing-project-metadata-manually]]
-====== Passing Project Metadata Manually
+===== Passing Project Metadata Manually
 
 You can export the project model manually. Select
 `CUBA > Advanced > Export project model` in the main menu. Studio will
@@ -797,7 +796,7 @@ customize the columns. `columnDefinitions` will take precedence over
 ____________________________________________________________________________________________________________________________________________________________________________________________
 
 [[columndefinitions]]
-====== columnDefinitions
+===== columnDefinitions
 
 `columnDefinitions` describes the columns to be displayed. The columns
 can represent entity properties or have arbitrary content (for example:
@@ -977,7 +976,7 @@ Out of the box React client supports `en` and `ru` locales.
 [[adding-new-localized-content]]
 ==== Adding New Localized Content
 
-* Add new messages to `src/i18n/{locale}.json` files
+* Add new messages to `src/i18n/\{locale}.json` files
 * Refer to them from your code using standard `react-intl` components or
 API (see
 https://github.com/formatjs/react-intl/blob/master/docs/README.md[documentation])
@@ -985,7 +984,7 @@ https://github.com/formatjs/react-intl/blob/master/docs/README.md[documentation]
 [[overriding-existing-messages]]
 ==== Overriding Existing Messages
 
-Simply replace existing messages in `src/i18n/{locale}.json` files. This
+Simply replace existing messages in `src/i18n/\{locale}.json` files. This
 way you can override messages in client app,
 link:packages/cuba-react-ui[CUBA React UI] components and some of the
 messages in `antd` components.
@@ -993,7 +992,7 @@ messages in `antd` components.
 [[adding-support-for-new-locales]]
 ==== Adding Support for New Locales
 
-* Add a corresponding `{locale}.json` message pack. Note that it shall
+* Add a corresponding `\{locale}.json` message pack. Note that it shall
 contain messages for link:packages/cuba-react-ui[CUBA React UI]
 components (keys starting with `cuba-react`) and `antd` `Form`
 validation messages (keys starting with `antd.form.validation`)

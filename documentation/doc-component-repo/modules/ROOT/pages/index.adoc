@@ -1,5 +1,5 @@
-[[cuba-platform-frontend-generator]]
-CUBA Platform Frontend Generator
+= CUBA Platform Frontend Generator
+:toc:
 --------------------------------
 
 https://travis-ci.org/cuba-platform/frontend[image:https://travis-ci.org/cuba-platform/frontend.svg?branch=master[Build
@@ -7,52 +7,17 @@ Status]]
 http://commitizen.github.io/cz-cli/[image:https://img.shields.io/badge/commitizen-friendly-brightgreen.svg[Commitizen
 friendly]]
 
-[[table-of-contents]]
-Table of Contents
-~~~~~~~~~~~~~~~~~
-
-* link:#overview[Overview]
-* link:#getting-started[Getting Started]
-** link:#getting-started-studio[Getting Started Using CUBA Studio]
-** link:#getting-started-cli[Getting Started Using CLI]
-* link:#generator[Generator CLI]
-** link:#generator-commands-description[Commands Description]
-* link:#react-client[React Client]
-** link:#react-client-overview[Overview of React Client]
-** link:#react-client-creating-components[Creating React Components]
-** link:#react-client-mobx[Observable State with MobX]
-** link:#react-client-cuba-react-core[CUBA React Core Components]
-** link:#react-client-cuba-react-ui[CUBA React UI Components]
-** link:#react-client-routing[Routing and Menu]
-** link:#react-client-forms[Forms]
-** link:#react-client-i18n[I18n]
-** link:#react-client-theme[Customizing Theme]
-** link:#react-client-backend-model[Backend Model]
-** link:#react-client-sync[Synchronizing Project Model]
-** link:#react-client-security[Security]
-** link:#react-client-build[Building the Client]
-** link:#react-client-configuration[Configuration]
-* link:#react-native-client[React Native Client]
-** link:#react-native-running-the-client[Running the Client]
-** link:#react-native-technologies[Technologies]
-* link:#polymer-client[Polymer-based Client (Deprecated)]
-* link:#typescript-sdk[TypeScript SDK]
-** link:#react-client-entities[Entities]
-** link:#react-client-enums[Enums]
-* link:#rest-api[REST API]
-
 [[overview]]
-Overview
-~~~~~~~~
+== Overview
 
-This tool can be used to generate: - a front-end client for a CUBA
+This tool can be used to generate a front-end client for a CUBA
 Platform based application. The client can be powered by one of the
-following frameworks: - React - Polymer - a framework-agnostic
-link:#typescript-sdk[TypeScript SDK]
+following frameworks:
 
-_______________________________________________________________
-NOTE: Polymer client is deprecated and is not supported anymore
-_______________________________________________________________
+- React
+- React Native
+- Polymer (deprecated)
+- a framework-agnostic link:#typescript-sdk[TypeScript SDK]
 
 The front-end client is an alternative to the
 https://doc.cuba-platform.com/manual-latest/gui_framework.html[Generic
@@ -67,7 +32,7 @@ https://doc.cuba-platform.com/manual-latest/front_ui.html[front module]
 creation. Alternatively it can be used as a standalone CLI tool.
 
 [[supported-browsers]]
-Supported Browsers
+=== Supported Browsers
 
 The client supports all modern (evergreen) browsers. In order to support
 IE 9,10,11
@@ -75,8 +40,7 @@ https://facebook.github.io/create-react-app/docs/supported-browsers-features[add
 configuration] required.
 
 [[getting-started]]
-Getting Started
-~~~~~~~~~~~~~~~
+== Getting Started
 
 We recommend using an IDE with
 http://www.typescriptlang.org/[TypeScript] support:
@@ -88,18 +52,15 @@ Steps will vary depending on whether you are using the generator from
 CUBA Studio or as a standalone CLI tool.
 
 [[getting-started-using-cuba-studio]]
-Getting Started Using CUBA Studio
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=== Getting Started Using CUBA Studio
 
 [[installation]]
-Installation
-++++++++++++
+==== Installation
 
 Install https://doc.cuba-platform.com/studio/#installation[CUBA Studio].
 
 [[generating-a-client-from-studio]]
-Generating a Client from Studio
-+++++++++++++++++++++++++++++++
+==== Generating a Client from Studio
 
 You can generate a client as
 https://doc.cuba-platform.com/studio/#modules[a module of CUBA
@@ -107,12 +68,10 @@ application]. You will be able to create CRUD screens using CUBA Studio
 UI.
 
 [[getting-started-using-cli]]
-Getting Started Using CLI
-^^^^^^^^^^^^^^^^^^^^^^^^^
+=== Getting Started Using CLI
 
 [[installation-1]]
-Installation
-++++++++++++
+==== Installation
 
 Install https://nodejs.org/en/download/[Node.js] 12+ and npm 6+ (usually
 comes with node).
@@ -140,15 +99,14 @@ npx @cuba-platform/front-generator
 ----
 
 [[generating-a-client-using-cli]]
-Generating a Client Using CLI
-+++++++++++++++++++++++++++++
+==== Generating a Client Using CLI
 
 In order to generate a starter app, we need to feed the generator with
 project metadata (what entities do we have, etc.). There are two ways of
 doing that.
 
 [[passing-project-metadata-from-cuba-studio]]
-Passing Project Metadata from CUBA Studio
+===== Passing Project Metadata from CUBA Studio
 
 * Open your project in CUBA Studio.
 * Open settings (`File > Settings`), then open
@@ -175,7 +133,7 @@ image:packages/front-generator/etc/interactive-projects.png[Interactive
 project selection]
 
 [[passing-project-metadata-manually]]
-Passing Project Metadata Manually
+===== Passing Project Metadata Manually
 
 You can export the project model manually. Select
 `CUBA > Advanced > Export project model` in the main menu. Studio will
@@ -190,8 +148,7 @@ gen-cuba-front react-typescript:app --model /work/cuba-samples/sample-sales/proj
 ----
 
 [[generator-cli]]
-Generator CLI
-~~~~~~~~~~~~~
+== Generator CLI
 
 Run `gen-cuba-front` (or `npx @cuba-platform/front-generator`) without
 arguments to see usage info.
@@ -257,11 +214,10 @@ gen-cuba-front react-typescript:entity-management \
 ....
 
 [[commands-description]]
-Commands Description
-^^^^^^^^^^^^^^^^^^^^
+=== Commands Description
 
 [[react-typescriptapp]]
-react-typescript:app
+==== react-typescript:app
 
 Generates a React starter app. See link:#getting-started[Getting
 started].
@@ -275,10 +231,14 @@ started].
 ....
 
 [[react-typescriptentity-management]]
-react-typescript:entity-management
+==== react-typescript:entity-management
 
-Generates: - Route / main menu item - Editor screen to create or edit an
-entity - Browser screen to view the list of entities and/or perform CRUD
+Generates:
+
+- Route / main menu item
+- Editor screen to create or edit an
+entity
+- Browser screen to view the list of entities and/or perform CRUD
 operations.
 
 ....
@@ -292,7 +252,9 @@ operations.
 ....
 
 Browser screen is available in one of the following flavors (we call it
-list types): - list
+list types):
+
+* list
 
 image:packages/front-generator/etc/react/browser-list.png[List browser
 example]
@@ -331,7 +293,7 @@ showcase]
 ....
 
 [[react-typescriptentity-cards]]
-react-typescript:entity-cards
+==== react-typescript:entity-cards
 
 Generates a list of entities where each entity is represented by a card
 (similar to a Browser component with `"listType": "cards"`, see
@@ -363,7 +325,7 @@ link:#react-typescript-entity-management[react-typescript:entity-management])
 ....
 
 [[react-typescriptblank-component]]
-react-typescript:blank-component
+==== react-typescript:blank-component
 
 Generates a blank component.
 
@@ -386,7 +348,7 @@ Generates a blank component.
 ....
 
 [[sdkall]]
-sdk:all
+==== sdk:all
 
 Generates framework-agnostic link:#typescript-sdk[TypeScript SDK]. It is
 also generated when executing `react-typescript:app` command.
@@ -400,7 +362,7 @@ also generated when executing `react-typescript:app` command.
 ....
 
 [[sdkmodel]]
-sdk:model
+==== sdk:model
 
 Generates SDK model only.
 
@@ -413,16 +375,13 @@ Generates SDK model only.
 ....
 
 [[react-client]]
-React Client
-~~~~~~~~~~~~
+== React Client
 
 [[overview-of-react-client]]
-Overview of React Client
-^^^^^^^^^^^^^^^^^^^^^^^^
+=== Overview of React Client
 
 [[running-the-client]]
-Running the Client
-++++++++++++++++++
+==== Running the Client
 
 You can run the client by executing the following command:
 
@@ -443,7 +402,7 @@ application) you can use Gradle in order to run npm tooling:
 ----
 
 ________________________________________________________________________________________________________________________________________________________________
-There is a known
+NOTE: There is a known
 https://github.com/srs/gradle-node-plugin/issues/339[bug] in Gradle node
 plugin which does not kill JS development server on task interruption.
 ________________________________________________________________________________________________________________________________________________________________
@@ -456,8 +415,7 @@ deploy will not be available. We recommend using one of the above
 methods during development.
 
 [[technologies]]
-Technologies
-++++++++++++
+==== Technologies
 
 The client is based on the following frameworks and libraries:
 
@@ -475,8 +433,7 @@ generic REST API;
 scripts and configuration;
 
 [[project-structure]]
-Project Structure
-+++++++++++++++++
+==== Project Structure
 
 Here is the structure of the newly generated project:
 
@@ -505,8 +462,7 @@ If the client was generated using Studio it's placed in `modules/front`
 directory of main project.
 
 [[creating-react-components]]
-Creating React Components
-^^^^^^^^^^^^^^^^^^^^^^^^^
+=== Creating React Components
 
 It is highly recommended to read full
 https://reactjs.org/docs/getting-started.html[React documentation]. In
@@ -517,21 +473,26 @@ particular pages and screens.
 Let's create our first component: place file `Button.tsx` in `src`
 directory:
 
-```typescript jsx import React, \{ Component } from 'react';
+```
+import React, { Component } from 'react';
 
-export class Button extends Component \{ render() \{
-
-Click me
-
-; } } ```
+export class Button extends Component {
+  render() {
+    <button>Click me</button>;
+  }
+}
+```
 
 Alternatively, you can create the component using a function:
 
-`typescript jsx export function Button(props) {   return <button>{props.name}</button>; }`
+```
+export function Button(props) {
+  return <button>{props.name}</button>;
+}
+```
 
 [[observable-state-with-mobx]]
-Observable State with MobX
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+=== Observable State with MobX
 
 https://mobx.js.org/intro/overview.html[MobX] is a library for reactive
 state management which enables to work with state in a convenient and
@@ -539,25 +500,33 @@ concise way.
 
 Consider the following example:
 
-```typescript jsx @observer class Counter extends React.Component \{
+[source,typescript]
+----
+@observer
+class Counter extends React.Component {
 
-@observable count = 0;
+  @observable
+  count = 0;
 
-render() \{ return (
+  render() {
+    return (
+      <div>
+        Counter: {this.count} <br />
+        <button onClick={this.handleInc}> + </button>
+        <button onClick={this.handleDec}> - </button>
+      </div>
+    )
+  }
 
-....
-    Counter: {this.count} <br />
-    <button onClick={this.handleInc}> + </button>
-    <button onClick={this.handleDec}> - </button>
-  </div>
-)
-....
+  handleInc = () => {
+    this.count++;
+  }
 
+  handleDec = () => {
+    this.count--;
+  }
 }
-
-handleInc = () => \{ this.count++; }
-
-handleDec = () => \{ this.count--; } } ```
+----
 
 As soon as we decorate a class or a function component as
 https://mobx.js.org/refguide/observer-component.html[observer], it
@@ -567,11 +536,10 @@ i.e. in the example above changing `count` property will result in
 automatic re-render of the component.
 
 [[cuba-react-core-components]]
-CUBA React Core Components
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+=== CUBA React Core Components
 
 [[cubaappprovider]]
-CubaAppProvider
+==== CubaAppProvider
 
 `CubaAppProvider` initializes main CUBA React Core components and
 provides them to the client application. It receives an instance of REST
@@ -588,24 +556,35 @@ export interface CubaAppConfig {
 }
 ----
 
-*dataTransferFormats* can be used to override the default formats used
+`dataTransferFormats` can be used to override the default formats used
 to (de)serialize the data transferred by REST API.
 
-*displayFormats* can be used to override the formats used for data
+`displayFormats` can be used to override the formats used for data
 presentation.
 
 See
-https://cuba-platform.github.io/frontend/docs/cuba-rest-js/modules/_model_.html#propertytype[PropertyType]
+https://cuba-platform.github.io/frontend/docs/cuba-rest-js/modules/\_model_.html#propertytype[PropertyType]
 in CUBA REST JS API docs for the list of available property types.
 
 ____________________________________________________________________
-Only formats for temporal types can currently be overridden this way
+NOTE: Only formats for temporal types can currently be overridden this way
 ____________________________________________________________________
 
-`typescript jsx <CubaAppProvider cubaREST={cubaREST}                  config={{                    dataTransferFormats: {                      localDateTime: 'DD/MM/YYYY HH:mm:ss'                    }                  }} >    // App component tree </CubaAppProvider>`
+[source,typescript]
+----
+<CubaAppProvider cubaREST={cubaREST}
+                 config={{
+                   dataTransferFormats: {
+                     localDateTime: 'DD/MM/YYYY HH:mm:ss'
+                   }
+                 }}
+>
+   // App component tree
+</CubaAppProvider>
+----
 
 [[mainstore]]
-MainStore
+==== MainStore
 
 `MainStore` contains common application data. It's being initialized
 using `<CubaAppProvider>`.
@@ -644,7 +623,7 @@ export class AppInfo extends React.Component<MainStoreInjected> {
 ----
 
 [[datacollectionstore]]
-DataCollectionStore
+==== DataCollectionStore
 
 `DataCollectionStore` is a MobX based store for loading entity
 collections. It can be created via `collection()` initializer function:
@@ -685,7 +664,7 @@ class CarList extends React.Component {
 ----
 
 [[datainstancestore]]
-DataInstanceStore
+==== DataInstanceStore
 
 `DataInstanceStore` is used to work with a single instance of some
 Entity. It can be created via `instance()` initializer function:
@@ -704,17 +683,16 @@ dataInstance.commit()
 ----
 
 [[api-reference]]
-API Reference
+==== API Reference
 
 API reference for CUBA React Core components can be found
 http://cuba-platform.github.io/frontend/docs/cuba-react-core[here].
 
 [[cuba-react-ui-components]]
-CUBA React UI Components
-^^^^^^^^^^^^^^^^^^^^^^^^
+=== CUBA React UI Components
 
 [[entityproperty]]
-EntityProperty
+==== EntityProperty
 
 `<EntityProperty>` component is aimed to display a value of some
 Entity's property. It automatically applies formatting according to the
@@ -729,7 +707,7 @@ type of property and adds a corresponding label from global message pack
 ----
 
 [[formfield]]
-FormField
+==== FormField
 
 `<FormField>` component automatically creates correct Form UI component
 based on entity and property names:
@@ -753,7 +731,7 @@ petTypesDc = collection<PetType>(PetType.NAME, {view: '_minimal', sort: 'name'})
 ----
 
 [[datatable]]
-DataTable
+==== DataTable
 
 `<DataTable>` is used to present data in tabular form.
 
@@ -771,9 +749,28 @@ At the same time `<DataTable>` provides developer with a full access to
 underlying `Table` via its `tableProps` and `columnDefinitions`
 properties (see below).
 
-Example of using `<DataTable>`'s API:
+Example of using `<DataTable>` API:
 
-`typescript jsx <DataTable dataCollection={this.dataCollection}            columnDefinitions={[              'item',              'manufacturer',              {                field: 'price',                columnProps: {                  align: 'right'                }                         }            ]}            onSelectedRowChange={this.onSelectedRowChange}            buttons={buttons}            tableProps={{              bordered: true            }}  />`
+[source,typescript]
+----
+<DataTable dataCollection={this.dataCollection}
+           columnDefinitions={[
+             'item',
+             'manufacturer',
+             {
+               field: 'price',
+               columnProps: {
+                 align: 'right'
+               }
+             }
+           ]}
+           onSelectedRowChange={this.onSelectedRowChange}
+           buttons={buttons}
+           tableProps={{
+             bordered: true
+           }}
+/>
+----
 
 * `dataCollection` - instance of `DataCollectionStore`
 * `columnDefinitions` - describes the columns to be displayed. See more
@@ -793,13 +790,13 @@ https://ant.design/components/table/#Column[Column properties]. Applied
 to every column.
 
 ____________________________________________________________________________________________________________________________________________________________________________________________
-`columnDefinitions` is more flexible and provides greater ability to
+NOTE: `columnDefinitions` is more flexible and provides greater ability to
 customize the columns. `columnDefinitions` will take precedence over
 `fields` and `columnProps` if used simultaneously.
 ____________________________________________________________________________________________________________________________________________________________________________________________
 
 [[columndefinitions]]
-columnDefinitions
+===== columnDefinitions
 
 `columnDefinitions` describes the columns to be displayed. The columns
 can represent entity properties or have arbitrary content (for example:
@@ -811,7 +808,16 @@ There are 3 ways you can define a column:
 `DataTable` will render a column with default settings for that
 property.
 
-`typescript jsx <DataTable         dataCollection={this.dataCollection}        columnDefinitions={[          'manufacturer',          // more columns        ]} />`
+[source,typescript]
+----
+<DataTable
+       dataCollection={this.dataCollection}
+       columnDefinitions={[
+         'manufacturer',
+         // more columns
+       ]}
+/>
+----
 
 *2.* If you want to customize the default column, use a
 `ColumnDefinition` object where `field` is an entity property name and
@@ -820,69 +826,119 @@ https://ant.design/components/table/#Column[ColumnProps] object. The
 properties you put in `columnProps` will override the default
 properties.
 
-`typescript jsx <DataTable         dataCollection={this.dataCollection}        columnDefinitions={[          {            field: 'manufacturer', // property name            columnProps: { // antd ColumnProps object              align: 'right'            }                     },          // more columns        ]} />`
+[source,typescript]
+----
+<DataTable
+       dataCollection={this.dataCollection}
+       columnDefinitions={[
+         {
+           field: 'manufacturer', // property name
+           columnProps: { // antd ColumnProps object
+             align: 'right'
+           }
+         },
+         // more columns
+       ]}
+/>
+----
 
 *3.* If you want a column not bound to an entity field, create it from
 scratch using `columnProps` and do not specify a `field`.
 
-`typescript jsx <DataTable         dataCollection={this.dataCollection}        columnDefinitions={[          {            columnProps: { // antd ColumnProps object              render: (text, record) => { /* render some custom content */ }            }                     },          // more columns        ]} />`
+[source,typescript]
+----
+<DataTable
+       dataCollection={this.dataCollection}
+       columnDefinitions={[
+         {
+           columnProps: { // antd ColumnProps object
+             render: (text, record) => { /* render some custom content */ }
+           }
+         },
+         // more columns
+       ]}
+/>
+----
 
 If you need even more control, you may want to start with a vanilla antd
 https://ant.design/components/table/[Table] and take a look into
 exported functions in `DataTableHelpers`. These functions are used to
-create `DataTable`'s custom functionality such as custom filters. You
+create `DataTable` custom functionality such as custom filters. You
 may also want to look into using `DataTableCustomFilter` directly. Note
 that both these approaches may require deeper understanding of
-`DataTable`'s internal workings.
+`DataTable` internal workings.
 
 [[api-reference-1]]
-API Reference
+==== API Reference
 
 API reference for CUBA React UI components can be found
 http://cuba-platform.github.io/frontend/docs/cuba-react-ui[here].
 
 [[routing-and-menu]]
-Routing and Menu
-^^^^^^^^^^^^^^^^
+=== Routing and Menu
 
 Routing is based on well-known
 https://reacttraining.com/react-router/web/guides/quick-start[React
 Router] library. The generated app has a single point (`src/routing.ts`)
 to define screens which will be automatically placed in the main menu:
 
-`typescript jsx menuItems.push({   pathPattern: '/pets', // pattern may be used to consume some parameters, e.g.: /pets/:petId?   menuLink: '/pest',   component: PetBrowser, // component to be rendered, should be imported in \`routes.ts\`   caption: 'Pets' // Menu item caption });`
+[source,typescript]
+----
+menuItems.push({
+  pathPattern: '/pets', // pattern may be used to consume some parameters, e.g.: /pets/:petId?
+  menuLink: '/pest',
+  component: PetBrowser, // component to be rendered, should be imported in `routes.ts`
+  caption: 'Pets' // Menu item caption
+});
+----
 
 The `src/App.tsx` contains `Switch` component which renders screen
 depending on the URL path:
 
-`typescript jsx   <Switch>     <Route exact={true} path="/" component={HomePage}/>   {collectRouteItems(menuItems).map(route => (  // get all routes from main and sub menus   <Route key={route.pathPattern} path={route.pathPattern} component={route.component}/>     )}   </Switch>`
+[source,typescript]
+----
+  <Switch>
+    <Route exact={true} path="/" component={HomePage}/>
+  {collectRouteItems(menuItems).map(route => (  // get all routes from main and sub menus
+  <Route key={route.pathPattern} path={route.pathPattern} component={route.component}/>
+    )}
+  </Switch>
+----
 
 You can manually add `Route` to `Switch` component or customize the
 structure used in `routes.ts` for example in order to create
 hierarchical menu.
 
 [[sub-menus]]
-Sub Menus
-+++++++++
+==== Sub Menus
 
 To create hierarchical menu you need to create `SubMenu` instance in
-`routes.ts` and add it to `menuItems` ```typescript jsx // This is
-RouteItem object that we want to see in User Settings sub menu const
-userProfileRouteItem = \{ pathPattern: "/profile", menuLink: "/profile",
-component: UserProfile, caption: "UserProfile" };
+`routes.ts` and add it to `menuItems`
 
-// SubMenu const userSettingsSubMenu = \{ caption: 'UserSettings', //
-add router.UserSettings key to src/i18n/en.json for valid caption items:
-[userProfileRouteItem]};
+[source,typescript]
+----
+// This is RouteItem object that we want to see in User Settings sub menu
+const userProfileRouteItem = {
+  pathPattern: "/profile",
+  menuLink: "/profile",
+  component: UserProfile,
+  caption: "UserProfile"
+};
 
-// Add sub menu to menu config menuItems.push(userSettingsSubMenu); ```
+// SubMenu
+const userSettingsSubMenu = {
+  caption: 'UserSettings', // add router.UserSettings key to src/i18n/en.json for valid caption
+  items: [userProfileRouteItem]};
+
+// Add sub menu to menu config
+menuItems.push(userSettingsSubMenu);
+----
 
 Sub menus can have unlimited nesting. One sub menu could be used as item
 of another.
 
 [[forms]]
-Forms
-^^^^^
+=== Forms
 
 In order to facilitate data binding, Ant Design's
 https://ant.design/components/form/[Form] component and utilities are
@@ -890,14 +946,27 @@ used in the app. On top of that we provide a `Field` component which
 automatically renders corresponding component basing on metadata. See
 the following example:
 
-`typescript jsx   <Field     entityName={Car.NAME}     propertyName="manufacturer"     form={this.props.form}     formItemOpts={{ style: { marginBottom: "12px" } }}     getFieldDecoratorOpts={{       rules: [{ required: true }]     }}     componentProps= {{       maxLength: 4     }}   />`
+[source,typescript]
+----
+  <Field
+    entityName={Car.NAME}
+    propertyName="manufacturer"
+    form={this.props.form}
+    formItemOpts={{ style: { marginBottom: "12px" } }}
+    getFieldDecoratorOpts={{
+      rules: [{ required: true }]
+    }}
+    componentProps= {{
+      maxLength: 4
+    }}
+  />
+----
 
 You can customize underlying components, validation rules and binding
 using `getFieldDecoratorOpts` and `componentProps` properties.
 
 [[i18n]]
-I18n
-^^^^
+=== I18n
 
 i18n is powered by https://github.com/formatjs/react-intl[react-intl]
 library.
@@ -905,34 +974,34 @@ library.
 Out of the box React client supports `en` and `ru` locales.
 
 [[adding-new-localized-content]]
-Adding New Localized Content
+==== Adding New Localized Content
 
-* Add new messages to `src/i18n/{locale}.json` files
+* Add new messages to `src/i18n/\{locale}.json` files
 * Refer to them from your code using standard `react-intl` components or
 API (see
 https://github.com/formatjs/react-intl/blob/master/docs/README.md[documentation])
 
 [[overriding-existing-messages]]
-Overriding Existing Messages
+==== Overriding Existing Messages
 
-Simply replace existing messages in `src/i18n/{locale}.json` files. This
+Simply replace existing messages in `src/i18n/\{locale}.json` files. This
 way you can override messages in client app,
 link:packages/cuba-react-ui[CUBA React UI] components and some of the
 messages in `antd` components.
 
 [[adding-support-for-new-locales]]
-Adding Support for New Locales
+==== Adding Support for New Locales
 
-* Add a corresponding `{locale}.json` message pack. Note that it shall
+* Add a corresponding `\{locale}.json` message pack. Note that it shall
 contain messages for link:packages/cuba-react-ui[CUBA React UI]
 components (keys starting with `cuba-react`) and `antd` `Form`
 validation messages (keys starting with `antd.form.validation`)
 * Create a mapping between locale and message pack by modifying
 `messagesMapping` in `src/i18n/i18nMappings.ts`
 * Create a mapping between locale and `antd/es/locale-provider/Locale`
-object by modifying `antdLocaleMapping` in `src/i18n/i18nMappings.ts`. >
+object by modifying `antdLocaleMapping` in `src/i18n/i18nMappings.ts`.
 This is required because most of the messages in `antd` components are
-translated by telling `antd` to use one of the predefined locales. > An
+translated by telling `antd` to use one of the predefined locales. An
 extensive list of locales supported by `antd` can be found
 https://ant.design/docs/react/i18n[here].
 * Add import of corresponding https://github.com/moment/moment[moment]
@@ -943,8 +1012,7 @@ required because some of `antd` components use localized messages from
 default `LanguageSwitcher` - add a locale option into it.
 
 [[customizing-theme]]
-Customizing Theme
-^^^^^^^^^^^^^^^^^
+=== Customizing Theme
 
 Ant Design provides a possibility to
 https://ant.design/docs/react/customize-theme[customize theme] using
@@ -955,16 +1023,23 @@ In order to do so, you will need to make some modifications to the
 generated app.
 
 __________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-NOTE: you will have to enable deprecated inline Javascript in `less` as
+NOTE: You will have to enable deprecated inline Javascript in `less` as
 `antd` makes heavy use of it.
 http://lesscss.org/usage/#less-options-strict-units[Reasons for
-deprecation.] - Install the required dependencies. Note that we are
+deprecation.]
+__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+- Install the required dependencies. Note that we are
 using https://github.com/timarney/react-app-rewired[react-app-rewired]
 to modify the webpack config without having to `eject`. +
-`shell script npm i react-app-rewired less less-loader customize-cra babel-plugin-import --save-dev`
+
+[source,bash]
+----
+npm i react-app-rewired less less-loader customize-cra babel-plugin-import --save-dev
+----
+
 - Create `config-overrides.js` file in the app root. The file shall look
 like this.
-__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 [source,typescript]
 ----
@@ -1002,20 +1077,21 @@ body {
 }
 ----
 
-References: - detailed
+References:
+
+- detailed
 https://ant.design/docs/react/use-with-create-react-app#Customize-Theme[documentation]
 on Ant Design website
 
 [[css-methodology]]
-CSS Methodology
+==== CSS Methodology
 
-Both client and link:packages/cuba-react-ui[CUBA React UI] follow
+Both the generated client and link:packages/cuba-react-ui[CUBA React UI] follow
 http://rscss.io[RSCSS methodology]. Additionally, we adopt Base Rules
 from http://smacss.com/book/type-base[SMACSS methodology].
 
 [[backend-model]]
-Backend Model
-^^^^^^^^^^^^^
+=== Backend Model
 
 `src/cuba` directory contains TypeScript representation of project's
 entities, views and facades to access REST services. See more details in
@@ -1061,8 +1137,7 @@ function changeRole(role: Role) {
 ----
 
 [[synchronizing-project-model]]
-Synchronizing Project Model
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+=== Synchronizing Project Model
 
 In order to regenerate project model to conform changes in the backend
 you can use the following command:
@@ -1073,8 +1148,7 @@ $ npm run `update-model`
 ----
 
 [[security]]
-Security
-^^^^^^^^
+=== Security
 
 Since React client works via Generic REST API endpoints, the backend
 (CUBA) application should have properly configured Security Roles and
@@ -1089,8 +1163,7 @@ return `DENY` `VIEW` or `MODIFY` * `isOperationAllowed` checks entity
 operation permission and returns `true` or `false`
 
 [[building-the-client]]
-Building the Client
-^^^^^^^^^^^^^^^^^^^
+=== Building the Client
 
 `$ npm run build` command builds your app for production use. See
 `build` folder.
@@ -1100,8 +1173,7 @@ https://facebook.github.io/create-react-app/docs/available-scripts[available
 scripts] in Create React App documentation.
 
 [[configuration]]
-Configuration
-^^^^^^^^^^^^^
+=== Configuration
 
 By default, client deployed to Tomcat is built with production preset
 and aimed to be served under `app-front` context. Use `PUBLIC_URL` env
@@ -1118,12 +1190,10 @@ See `src/config.ts` for full list of common application settings used in
 runtime.
 
 [[react-native-client]]
-React Native Client
-~~~~~~~~~~~~~~~~~~~
+== React Native Client
 
 [[running-the-client-1]]
-Running the Client
-^^^^^^^^^^^^^^^^^^
+=== Running the Client
 
 Install dependencies:
 
@@ -1154,7 +1224,7 @@ npm install -g expo-cli
 
 See https://expo.io/[Expo documentation] for details on available
 commands and options. If you are running Expo via npm scripts, note that
-there convenience scripts for the most widely used commands:
+there convenience scripts for the most frequently used commands:
 
 [source,bash]
 ----
@@ -1205,7 +1275,7 @@ expo start --android --clear
 ----
 
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-In order to run the app on an emulator/simulator you may need to change
+TIP: In order to run the app on an emulator/simulator you may need to change
 `REACT_NATIVE_APP_CUBA_URL` in `.env` from `localhost` to your IP
 address. You may need to clear the React Native Packager cache for the
 change to take effect (e.g. `expo start --android --clear` or
@@ -1213,8 +1283,7 @@ change to take effect (e.g. `expo start --android --clear` or
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 [[technologies-1]]
-Technologies
-^^^^^^^^^^^^
+=== Technologies
 
 The client is based on the following frameworks and libraries:
 
@@ -1227,15 +1296,13 @@ generic REST API;
 * https://expo.io/[Expo] - development tools for React Native;
 
 [[polymer-based-client-deprecated]]
-Polymer-based Client (Deprecated)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Polymer-based Client (Deprecated)
 
 Documentation can be found
 https://doc.cuba-platform.com/manual-latest/polymer_ui.html[here].
 
 [[typescript-sdk]]
-TypeScript SDK
-~~~~~~~~~~~~~~
+== TypeScript SDK
 
 TypeScript SDK contains CUBA data model
 (https://doc.cuba-platform.com/manual-latest/data_model.html[entities
@@ -1260,11 +1327,10 @@ SDK can be used for front-end clients and Node.js-based BFF (Backend for
 Frontend) development.
 
 [[entities]]
-Entities
-^^^^^^^^
+=== Entities
 
 [[persistent-entities]]
-Persistent Entities
+==== Persistent Entities
 
 Consider the `Role` entity class of CUBA Framework generated in
 TypeScript:
@@ -1299,7 +1365,7 @@ function changeRole(role: Role) {
 ----
 
 [[non-persistent-entities]]
-Non-persistent Entities
+==== Non-persistent Entities
 
 CUBA Platform supports non-persistent entities in model. Entity class
 should be annotated with
@@ -1309,7 +1375,7 @@ annotated with `com.haulmont.chile.core.annotations.MetaProperty` will
 be included in generated model.
 
 [[source]]
-Source
+Source:
 
 [source,java]
 ----
@@ -1332,7 +1398,7 @@ public class SampleUserInfo extends BaseUuidEntity {
 ----
 
 [[generated]]
-Generated
+Generated:
 
 [source,typescript]
 ----
@@ -1344,8 +1410,7 @@ export class SampleUserInfo {
 ----
 
 [[enums]]
-Enums
-^^^^^
+=== Enums
 
 CUBA REST API module uses enum’s constant name in client-server
 communication. SDK contains generated string enums e.g.:
@@ -1395,13 +1460,12 @@ Response example:
 ----
 
 [[rest-api]]
-REST API
-~~~~~~~~
+== REST API
 
 Generated front-end clients use
 https://doc.cuba-platform.com/restapi-7.1/[Generic REST API]. The
-detailed documentation on the API endpoints is published at
-http://files.cuba-platform.com/swagger/7.1.
+detailed documentation on the API endpoints is published
+http://files.cuba-platform.com/swagger/7.1[here].
 
 link:packages/cuba-rest-js[CUBA REST JS] library is used to communicate
 with Generic REST API. Documentation and API reference can be found
