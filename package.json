@@ -6,6 +6,8 @@
     "npm": ">=6"
   },
   "devDependencies": {
+    "@antora/cli": "^2.2.0",
+    "@antora/site-generator-default": "^2.2.0",
     "@commitlint/cli": "^8.3.4",
     "@commitlint/config-conventional": "^8.3.4",
     "@commitlint/travis-cli": "^8.3.4",
@@ -19,6 +21,7 @@
   },
   "scripts": {
     "lerna": "lerna",
+    "antora": "antora",
     "commit": "node_modules/commitizen/bin/git-cz",
     "pack-given-client-libs": "node scripts/pack-given-client-libs.js",
     "pack-react-client-libs": "node scripts/pack-react-client-libs.js",

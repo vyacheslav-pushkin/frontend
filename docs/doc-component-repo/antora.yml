@@ -1,0 +1,5 @@
+name: cuba-frontend-docs
+title: Cuba Platform Frontend UI Documentation
+version: v2.4.5
+nav:
+  - modules/ROOT/nav.adoc

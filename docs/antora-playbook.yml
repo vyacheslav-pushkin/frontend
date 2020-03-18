@@ -1,0 +1,19 @@
+site:
+  title: Cuba Platform Frontend UI
+  url: https://cuba-platform.github.io/frontend
+  start_page: root-component::index.adoc
+content:
+  sources:
+    # embedding empty credentials in the URL disables the Edit this Page link for any page created from this repository
+#    - url: https://@github.com/cuba-platform/frontend.git
+    - url: ~/frontend
+      branches:
+        - pv/docs/site
+#        - master
+#        - develop
+#        - v[0-9]*
+      start_path: docs/doc-component-repo
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
