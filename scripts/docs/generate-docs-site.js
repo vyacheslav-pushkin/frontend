@@ -1,9 +1,18 @@
+const rimraf = require('rimraf');
 const {runCmdSync} = require('../common');
 const fs = require('fs');
-const childProcess = require('child_process');
+yaml = require('js-yaml');
 
-fs.copyFileSync('README.adoc', 'documentation/doc-component-repo/modules/ROOT/pages/index.adoc');
-childProcess.fork(__dirname + '/update-nav.js');
+const highlight = '\x1b[34m%s\x1b[0m';
+const success = '\x1b[32m%s\x1b[0m';
+
+console.log(highlight, 'Generating site...');
+rimraf.sync('documentation/build');
+// Generate the site from asciidoc
 runCmdSync('npm run antora:gen');
-// create .nojekyll file to allow deploying to GitHub pages:
+// Add .nojekyll file so that site can be deployed to GitHub Pages
 fs.closeSync(fs.openSync('documentation/build/site/.nojekyll', 'w'));
+// // Copy API reference
+// fs.copyFileSync('documentation/api-reference', 'documentation/build/')
+
+console.log(success, 'Documentation site has been generated successfully');
