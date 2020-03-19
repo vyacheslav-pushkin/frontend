@@ -6,7 +6,7 @@ content:
     - url: ~/frontend
       branches:
         - pv/docs/site
-        - pv/docs/site2
+        - pv/docs/site-v2.x.y
 #        - master
 #        - develop
 #        - v[0-9]*
