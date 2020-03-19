@@ -46,12 +46,6 @@ if (id) {
   console.log('Skipping id not followed by (sub)section name: ' + id);
 }
 
-// Add links to API Reference documentation
-nav += ('* link:#libs-api-reference[API Reference]\n' +
-       '** link:api-reference/cuba-rest-js/index.html[CUBA REST JS]\n' +
-       '** link:api-reference/cuba-react-core/index.html[CUBA React Core]\n' +
-       '** link:api-reference/cuba-react-ui/index.html[CUBA React UI]\n');
-
 fs.writeFileSync('./documentation/doc-component-repo/modules/ROOT/nav.adoc', nav);
 
 console.log(`Navigation panel for documentation site has been successfully generated`);
