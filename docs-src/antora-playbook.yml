@@ -5,12 +5,11 @@ output:
   dir: docs
 content:
   sources:
-    - url: ~/frontend
+    - url: https://github.com/cuba-platform/frontend
       branches:
         - pv/docs/site
         - pv/docs/site-v2.x.y
 #        - master
-#        - develop
 #        - v[0-9]*
       start_path: docs-src/doc-component-repo
 ui:
